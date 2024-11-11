@@ -1,21 +1,24 @@
-typedef struct cubeCoords { 
+#ifndef COORDS
+#define COORDS
+struct cubeCoords { 
     // circ around origin 1 len
-    int center[3] = {0,0,0};
-    int coords[8][3] = {
-        {-1,-1,-1},
-        {1,-1,-1},
-        {1,1,-1},
-        {-1,1,-1},
-        {-1,1,1},
-        {1,1,1},
-        {1,-1,1},
-        {-1,-1,1}
+    double center[3] = {0,0,0};
+	
+	// final coord used for homogenous coords(will always be 1)
+    double coords[8][4] = {
+        {-1,-1,-1,1},
+        {1,-1,-1,1},
+        {1,1,-1,1 },
+        {-1,1,-1,1},
+        {-1,1,1,1},
+        {1,1,1,1},
+        {1,-1,1,1},
+        {-1,-1,1,1}
     };
 
-    int rotationSpeed;
-    int rotX;
-    int rotY;
-    int rotZ;
+    int rotationSpeed = 1;
 
-} cubeInfo;
+};
+extern cubeCoords cube;
 
+#endif
