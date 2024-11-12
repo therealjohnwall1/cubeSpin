@@ -47,12 +47,48 @@ void applyTransform(double xRot, double yRot, double zRot) {
 void echoState() {
 	for(int i=1;i<9;i++) {
         std::cout << "coord num: " << i  << "   " << cube.coords[i-1][0] << "," <<
-                cube.coords[i-1][1] << "," << cube.coords[i-1][2] << "depth: " << cube.coords[i-1][3] <<"\n";
+        cube.coords[i-1][1] << "," << cube.coords[i-1][2] << "depth: " << cube.coords[i-1][3] <<"\n";
     }   
 }
 
+void render(int width, int height) {
+    std::string screen[width][height];
+    double coords2D[8][4] = {0};
+    project2D(1,90,30,10,5,coords2D);    
+
+    for(int p=0; p<8; p++) {
+        coords2D[p][0] = (coords2D[p][0] + 1)/2 * (width-1);
+        coords2D[p][1] = (1 - coords2D[p][1])/2 * (height-1);
+    }   
+
+    std::cout << "normalzied points + upscale to pic\n";
+    for (int j = 0; j < 8; j++) {
+        for (int x = 0; x < 4; x++) {
+            std::cout << coords2D[j][x] << ",";
+        }
+        std::cout << "\n";
+    }
+    
+    for(int i=0; i<height; i++) {
+        for(int z=0; z<width; z++) {
+            screen[i][z] = "0";
+        }
+    }
+
+    for (int j = 0; j < 8; j++) {
+        screen[(int)coords2D[j][1]][(int)coords2D[j][0]] = "@";
+    }
+
+    for(int i=0; i<height; i++) {
+        for(int z=0; z<width; z++) {
+            std::cout << screen[i][z];
+        }
+        std::cout << "\n";
+    }
+}
+
 int main() {
+    //applyTransform(100,10,0);
     echoState();
-    applyTransform(100.0, 1.0, 0.0); 
-    echoState();
+    render(10,10);
 }

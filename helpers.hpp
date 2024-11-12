@@ -1,5 +1,10 @@
-#ifndef COORDS
-#define COORDS
+#pragma once
+#include <string>
+#include <math.h>
+
+#define deg2Rad(x) x*(M_PI/180)
+#define rad2Deg(x) x*(180/M_PI)
+
 struct cubeCoords { 
     // circ around origin 1 len
     double center[3] = {0,0,0};
@@ -21,4 +26,4 @@ struct cubeCoords {
 };
 extern cubeCoords cube;
 
-#endif
+
