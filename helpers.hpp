@@ -20,9 +20,6 @@ struct cubeCoords {
         {1,-1,1,1},
         {-1,-1,1,1}
     };
-
-    int rotationSpeed = 1;
-
 };
 extern cubeCoords cube;
 

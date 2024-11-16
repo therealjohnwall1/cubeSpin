@@ -1,4 +1,5 @@
 #include "matrixMul.hpp"
+#include <unistd.h>
 
 // config stuff for cube
 cubeCoords cube;
@@ -32,12 +33,12 @@ void applyTransform(double xRot, double yRot, double zRot) {
    
     matrixMul3D(rotX,rotY, xMuly);
 
-    for(int i = 0; i < 3; i++) {
-        for(int j=0; j < 3;j++) {
-            std::cout << xMuly[i][j] << ", ";
-        }   
-        std::cout <<"\n";
-    }   
+    //for(int i = 0; i < 3; i++) {
+        //for(int j=0; j < 3;j++) {
+            //std::cout << xMuly[i][j] << ", ";
+        //}   
+        //std::cout <<"\n";
+    //}   
     matrixMul3D(xMuly, rotZ, totRot);
     
    // apply total rotation onto coordinates 
@@ -54,20 +55,21 @@ void echoState() {
 void render(int width, int height) {
     std::string screen[width][height];
     double coords2D[8][4] = {0};
-    project2D(1,90,30,10,5,coords2D);    
+    double aspect = (double)width/height;
 
-    for(int p=0; p<8; p++) {
-        coords2D[p][0] = (coords2D[p][0] + 1)/2 * (width-1);
-        coords2D[p][1] = (1 - coords2D[p][1])/2 * (height-1);
-    }   
 
-    std::cout << "normalzied points + upscale to pic\n";
-    for (int j = 0; j < 8; j++) {
-        for (int x = 0; x < 4; x++) {
-            std::cout << coords2D[j][x] << ",";
-        }
-        std::cout << "\n";
-    }
+    project2D(1, 90, aspect, 10, 5, coords2D);    
+
+    std::cout << "coords: \n";
+    for(int i=0;i<8;i++) {
+        std::cout << coords2D[i][0] << "," << coords2D[i][1] << "," << coords2D[i][2] << "," << coords2D[i][3] << "\n";
+    }    
+
+    //for(int p=0; p<8; p++) {
+        //coords2D[p][0] = (coords2D[p][0] + 1)/2 * (width-1);
+        //coords2D[p][1] = (1 - coords2D[p][1])/2 * (height-1);
+    //}   
+
     
     for(int i=0; i<height; i++) {
         for(int z=0; z<width; z++) {
@@ -75,7 +77,7 @@ void render(int width, int height) {
         }
     }
 
-    for (int j = 0; j < 8; j++) {
+    for (int j = 0; j < height; j++) {
         screen[(int)coords2D[j][1]][(int)coords2D[j][0]] = "@";
     }
 
@@ -88,7 +90,14 @@ void render(int width, int height) {
 }
 
 int main() {
-    //applyTransform(100,10,0);
-    echoState();
-    render(10,10);
+    int delta_x = 90;
+    while (1) {
+        applyTransform(delta_x,0,0);
+        render(35,10);
+        delta_x++;
+        sleep(2);
+        std::cout << "\n";
+    }
 }
+
+
