@@ -45,7 +45,7 @@ void matrixMul3D(double matrix1[3][3], double matrix2[3][3], double ans[3][3]) {
 void project2D(double scaleFactor, double fov, double aspect, double far, double near, double coords2D[8][4]) {
     fov = deg2Rad(fov)/2;
     double test = 1/(aspect* std::tan(fov));
-    std::cout << "aspect: " << test << "\n";
+    // std::cout << "aspect: " << test << "\n";
 
     double projMat[4][4] = {
         {1/(aspect * std::tan(fov)),0,0,0},
@@ -67,12 +67,6 @@ void project2D(double scaleFactor, double fov, double aspect, double far, double
         coords2D[i][1] = vec2d[1]/vec2d[3]; 
         coords2D[i][2] = vec2d[2]/vec2d[3]; 
         coords2D[i][3] = vec2d[3]; 
-    }
-}
-
-void offsetCube(int offset) {
-    for (int i = 0; i < 8; i++) {
-        cube.coords[i][2] += offset; 
     }
 }
 
